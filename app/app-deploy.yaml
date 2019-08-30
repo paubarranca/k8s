@@ -5,7 +5,7 @@ metadata:
   labels:
     app: front
 spec:
-  replicas: 3
+  replicas: 1
   strategy:
     type: Recreate
   template:
