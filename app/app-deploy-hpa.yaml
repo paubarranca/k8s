@@ -1,0 +1,67 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: app-front
+  labels:
+    app: front
+spec:
+  replicas: 3
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: front
+    spec:
+      containers:
+      - name: app-front
+        image: paubarranca/docker-multi-site-apache 
+        ports:
+        - containerPort: 80
+          name: http
+        resources:
+          requests:
+            memory: "300M"
+            cpu: "300m"
+          limits:
+            memory: "500M"
+            cpu: "500m"
+
+---
+
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: app-front
+  namespace: k8s-deploy
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: app-front
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 75
+        
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-app-front
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  selector:
+    app: front
+    type: NodePort
+
