@@ -20,7 +20,14 @@ spec:
     spec:
       containers:
       - name: front-app
-        image: paubarranca/debian-apache-php:v1 
+        image: paubarranca/debian-apache-php:v1
+        livenessProbe:
+          exec:
+            command:
+              - /usr/bin/php
+              - /usr/local/scripts/health-check.php
+            initialDelaySeconds: 5
+            periodSeconds: 5
         ports:
         - containerPort: 80
           name: http
