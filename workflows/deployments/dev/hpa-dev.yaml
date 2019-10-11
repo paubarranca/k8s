@@ -1,12 +1,14 @@
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: app-front
+  name: front-app
+  env: dev
 spec:
   scaleTargetRef:
     apiVersion: extensions/v1beta1
     kind: Deployment
     name: front-app
+    env: dev
   minReplicas: 5
   maxReplicas: 40
   targetCPUUtilizationPercentage: 75
