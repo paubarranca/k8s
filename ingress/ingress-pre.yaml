@@ -4,13 +4,6 @@ metadata:
   name: ingress-pre
 spec:
   rules:
-  - host: dev.zobalo.com
-    http:
-      paths:
-      - path: /
-      - backend:
-          serviceName: front-app-dev
-          servicePort: 80
   - host: pre.zobalo.com
     http:
       paths:
