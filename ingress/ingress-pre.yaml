@@ -11,3 +11,19 @@ spec:
       - backend:
           serviceName: front-app-pre
           servicePort: 80
+
+---
+
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-dev
+  spec:
+    rules:
+    - host: dev.zobalo.com
+    http:
+      paths:
+      - path: /
+      - backend:
+          serviceName: front-app-dev
+          servicePort: 80
