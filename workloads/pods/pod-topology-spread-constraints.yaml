@@ -1,0 +1,28 @@
+# Control how pods are spread between the cluster to avoid failure-domains such as regions,zones,nodes and user-defined topology domains
+kind: Pod
+apiVersion: v1
+metadata:
+  name: pod-topology-spread
+  labels:
+    region: eu-west-1
+spec:
+  topologySpreadConstraints:
+  - maxSkew: 1
+    topologyKey: zone
+    whenUnsatisfiable: DoNotSchedule
+    labelSelector:
+      matchLabels:
+        region: eu-west-1
+  - maxSkew: 1
+    topologyKey: node
+    whenUnsatisfiable: DoNotSchedule
+    labelSelector:
+      matchLabels:
+        region: eu-west-1
+  containers:
+  - name: pause
+    image: k8s.gcr.io/pause:3.1
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "100m"

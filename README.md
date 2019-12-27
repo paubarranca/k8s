@@ -1,9 +1,3 @@
-# K8s-deploy
+# K8s-examples
 
-1 - Create the PV & PVC to store persistent data
-
-2 - Create CM, Secrets & DownwardAPI objects
-
-2 - Create the deployment + service
-
-3 - Apply the HPA to the deployment
+Examples for all the k8s objects and their use 

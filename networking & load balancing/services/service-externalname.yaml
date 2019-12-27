@@ -1,0 +1,8 @@
+# Services of type ExternalName map a Service to a DNS name, not to a typical selector 
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-deployment
+spec:
+  type: ExternalName
+  externalName: test.nginx.com

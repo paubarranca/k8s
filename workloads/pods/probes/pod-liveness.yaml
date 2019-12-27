@@ -1,0 +1,30 @@
+# If a pod doesn't pass the liveness probe the cluster will kill or restart them
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    test: liveness
+  name: liveness-http
+spec:
+  containers:
+  - args:
+    - /server  
+    name: liveness
+    image: k8s.gcr.io/liveness
+    livenessProbe:
+      httpGet:
+        # when "host" is not defined, "PodIP" will be used
+        # host: my-host
+        # when "scheme" is not defined, "HTTP" scheme will be used. Only "HTTP" and "HTTPS" are allowed
+        # scheme: HTTPS
+        path: /healthz
+        port: 8080
+        httpHeaders:
+        - name: X-Custom-Header
+          value: Awesome
+      initialDelaySeconds: 15
+      timeoutSeconds: 1
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "100m"

@@ -1,0 +1,30 @@
+# Startup probe is set with a liveness probe for legacy apps that require an additional startup time on the first init, setting the values failureThreshold & periodSeconds long enough to cover the worse case startup time
+kind: Pod
+metadata:
+  labels:
+    test: startup
+  name: startup
+spec:
+  ports:
+    - name: startup-port
+      containerPort: 8080
+      hostPort: 8080
+  containers:
+    name: startup
+    image: k8s.gcr.io/goproxy:0.1
+    livenessProbe:
+      httpGet:
+        path: /healthz
+        port: startup-port
+      failureThreshold: 1
+      periodSeconds: 10
+    startupProbe:
+      httpGet:
+        path: /healthz
+        port: startup-port
+      failureThreshold: 30
+      periodSeconds: 15
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "100m"

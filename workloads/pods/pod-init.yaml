@@ -1,0 +1,53 @@
+# Init containers are containers that start always before the app container, normally used as builder, where you can set secrets instead that in the app, met prerequisites before launching the app, run utilities...
+apiVersion: v1
+kind: Pod
+metadata:
+  name: init-container
+  labels:
+    test: init-container
+spec:
+  containers:
+  - name: app-container
+    image: busybox:1.28
+    command: ['sh', '-c', 'echo The app is running! && sleep 3600']
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "100m"
+  initContainers:
+  - name: init-app-svc
+    image: busybox:1.28
+    command: ['sh', '-c', 'until nslookup app-svc; do echo waiting for app-svc; sleep 2; done;']
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "100m"
+  - name: init-app-db
+    image: busybox:1.28
+    command: ['sh', '-c', 'until nslookup app-db; do echo waiting for app-db; sleep 2; done;']
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "100m"
+
+---
+apiVersion: v1
+kind: service
+metadata:
+  name: app-svc
+spec:
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 9376
+---
+
+apiVersion: v1
+kind: service
+metadata:
+  name: app-db
+spec:
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 9377

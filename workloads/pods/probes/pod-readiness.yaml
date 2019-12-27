@@ -1,0 +1,21 @@
+# If a pod doesn't pass the readiness probe the service will not send request to these pods
+kind: Pod
+metadata:
+  labels:
+    test: readiness
+  name: readiness-exec
+spec:
+  containers:
+    name: readiness
+    image: k8s.gcr.io/goproxy:0.1
+    readinessProbe:
+      exec:
+        command:
+        - cat
+        - /tmp/healthy
+      initialDelaySeconds: 5
+      periodSeconds: 5
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "100m"
