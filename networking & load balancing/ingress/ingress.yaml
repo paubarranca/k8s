@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+spec:
+  tls:
+  - secretName: my-first-secret
+  - secretName: my-second-secret
+  rules:
+  - host: dev.nginx.com
+    http:
+      paths:
+      - backend:
+          serviceName: nginx-deployment
+          servicePort: 80
+  - host: pre.nginx.com
+    http:
+      paths:
+      - backend:
+          serviceName: nginx-statefulset
+          servicePort: 80

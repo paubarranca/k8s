@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: dev.nginx.com
+    http:
+      paths:
+      - path: /testing
+        backend:
+          serviceName: nginx-deployment
+          servicePort: 80
+      - path: /staging
+        backend:
+          serviceName: nginx-statefulset
+          servicePort: 8080
