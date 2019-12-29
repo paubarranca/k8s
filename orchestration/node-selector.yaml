@@ -1,0 +1,15 @@
+# The pod only runs on a node that matches these labels
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "100m"
+  nodeSelector:
+    disktype: ssd

@@ -1,0 +1,28 @@
+# The Internal DNS is identifies objects based on these: 'hostname.subdomain.namespace.svc.cluster.local', for this pod for example:
+
+# / # nslookup  busybox.subdomain-test.testing.svc.cluster.local
+# Server:    10.214.0.10
+# Address 1: 10.214.0.10 kube-dns.kube-system.svc.cluster.local
+# 
+# Name:      busybox.subdomain-test.testing.svc.cluster.local
+# Address 1: 10.20.2.5 busybox.subdomain-test.testing.svc.cluster.local
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busybox
+  labels:
+    name: busybox
+spec:
+  hostname: busybox
+  subdomain: subdomain-test
+  containers:
+  - image: busybox:1.28
+    command:
+      - sleep
+      - "3600"
+    name: busybox
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "100m"
