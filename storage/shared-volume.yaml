@@ -1,0 +1,32 @@
+# Create a non persistent volume to share data between two containers in the same pod
+apiVersion: v1
+kind: Pod
+metadata:
+  name: shared-volume-pod
+spec:
+  volumes:
+  - name: shared-data
+    emptyDir: {}
+
+  containers:
+  - name: nginx-container
+    image: nginx
+    volumeMounts:
+    - name: shared-data
+      mountPath: /usr/share/nginx/html
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "100m"
+
+  - name: debian-container
+    image: debian
+    volumeMounts:
+    - name: shared-data
+      mountPath: /pod-data
+    command: ["/bin/sh"]
+    args: ["-c", "echo Hello from the debian container > /pod-data/index.html"]
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "100m"
