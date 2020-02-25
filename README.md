@@ -1,5 +1,7 @@
 # K8s
 
-Examples for k8s objects and their usage
+<p align="center">
+k8s objects
 
-![Kubernetes logo](https://miro.medium.com/max/2916/1*tOl9v0Q4QuGozvvGdkTvaA.png)
+![Kubernetes logo](https://www.shogan.co.uk/wp-content/uploads/kubernetes-logo-horiz.png)
+</p>

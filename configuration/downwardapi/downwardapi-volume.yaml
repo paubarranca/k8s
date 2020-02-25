@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: downwardapi-volume-pod
+  labels:
+    zone: eu-west-1
+    cluster: my-cluster
+    rack: rack-22
+  annotations:
+    version: "1"
+    builder: me :)
+spec:
+  containers:
+    - name: downwardapi-volume-container
+      image: k8s.gcr.io/busybox
+      command: ["sh", "-c"]
+      args:
+      - while true; do
+          if [[ -e /etc/podinfo/labels ]]; then
+            echo -en '\n\n'; cat /etc/podinfo/labels; fi;
+          if [[ -e /etc/podinfo/annotations ]]; then
+            echo -en '\n\n'; cat /etc/podinfo/annotations; fi;
+          sleep 5;
+        done;
+      volumeMounts:
+        - name: podinfo
+          mountPath: /etc/podinfo
+      resources:
+        limits:
+          memory: "128Mi"
+          cpu: "100m"
+  volumes:
+    - name: podinfo
+      downwardAPI:
+        items:
+          - path: "labels"
+            fieldRef:
+              fieldPath: metadata.labels
+          - path: "annotations"
+            fieldRef:
+              fieldPath: metadata.annotations
