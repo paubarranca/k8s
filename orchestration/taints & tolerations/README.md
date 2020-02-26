@@ -11,15 +11,15 @@ A few use cases to use taints and tolerations could be:
 
 <h2>Components</h2>
 
-Markup : * key
-         * value
-         * effect
-             * noSchedule - New pods that don't match the taint are not scheduled, existing pods in the node that don't have a toleration remain
-             * preferNoSchedule - New pods that don't match the taint might be scheduled, but the scheduler tries not to, existing pods in the node remain
-             * noExecute - New pods that don't match the taint are not scheduled, existing pods in the node that don't have a toleration are removed
-         * operator
-             * equal - key/value/effect parameters must match. Default
-             * exists - key/effect must match. Must leave a blank value parameter, which matches any
+* key
+* value
+* effect
+    * noSchedule - New pods that don't match the taint are not scheduled, existing pods in the node that don't have a toleration remain
+    * preferNoSchedule - New pods that don't match the taint might be scheduled, but the scheduler tries not to, existing pods in the node remain
+    * noExecute - New pods that don't match the taint are not scheduled, existing pods in the node that don't have a toleration are removed
+* operator
+    * equal - key/value/effect parameters must match. Default
+    * exists - key/effect must match. Must leave a blank value parameter, which matches any
 
 <h2>Practical examples</h2>
 
