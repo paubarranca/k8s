@@ -1,0 +1,21 @@
+# Pods with PreemptionPolicy: Never will be placed in scheduling queue ahead of lower priority pods, but they cannot preempt other pods, with this policy are subject to scheduler back-off, so if the pod cannot be scheduled, the scheduler will retry with lower frequency, so pods with lower priority could be scheduled before them 
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: high-priority-nonpreempting
+value: 1000000
+preemptionPolicy: Never
+globalDefault: false
+description: "This priority class will not cause other pods to be preempted."
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: priority-class-nonpreempting-pod
+spec:
+  containers:
+  - name: priority-class-nonpreempting-container
+    image: nginx
+  priorityClassName: high-priority-nonpreempting

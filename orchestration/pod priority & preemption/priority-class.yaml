@@ -1,0 +1,20 @@
+# It assigns a priority class to a pod/deploy/ds... The higher the value, the higher the priority
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: high-priority
+value: 1000000
+globalDefault: false
+description: "This priority class should be used for XYZ service pods only."
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: priority-class-pod
+spec:
+  containers:
+  - name: priority-class-container
+    image: nginx
+  priorityClassName: high-priority
