@@ -8,10 +8,6 @@ The preferred method for authorizing policies is to grant access to the pod's se
 
 To understand the architecture and purpose about the controller and the objects check [Kubernetes documentation](https://kubernetes.io/docs/concepts/policy/pod-security-policy/#what-is-a-pod-security-policy).
 
-<h2>PodSecurityPolicy Objects</h2>
-
-Define permissions within a namespace (Role) or an entire cluster (ClusterRole).
-
 <h2>Policy Reference</h2>
 
 [Fully explained policies references](https://kubernetes.io/docs/concepts/policy/pod-security-policy/#policy-reference)
