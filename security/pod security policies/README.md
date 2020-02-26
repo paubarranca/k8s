@@ -12,11 +12,11 @@ To understand the architecture and purpose about the controller and the objects 
 
 [Fully explained policies references](https://kubernetes.io/docs/concepts/policy/pod-security-policy/#policy-reference)
 
-<h5>Privileged</h5>
+<h4>Privileged</h4>
 
 **Privileged** - Determines if any container within a pod can enable privileged mode, that allows it to access devices on the host. Basically the container will have the same access as processes running on the host.
 
-<h5>Host namespaces</h5>
+<h4>Host namespaces</h4>
 
 **HostPID** - Controls whether the pod containers can share the host process ID namespace.
 
@@ -26,7 +26,7 @@ To understand the architecture and purpose about the controller and the objects 
 
 **HostPorts** - Provides a whitelist of ranges of allowable ports in the host network namespace. Defined as a list of HostPortRange, with min(inclusive) and max(inclusive). Defaults to no allowed host ports.
 
-<h5>Volumes and File Systems</h5>
+<h4>Volumes and File Systems</h4>
 
 **Volumes** - Provides a whitelist of allowed volume types. The minimum set recommended are: [configMap](https://cloud.google.com/kubernetes-engine/docs/concepts/configmap?hl=es-419), [secret](https://kubernetes.io/docs/concepts/configuration/secret/), [downwardAPI](https://kubernetes.io/docs/tasks/inject-data-application/downward-api-volume-expose-pod-information/), [emptyDir](https://kubernetes.io/docs/concepts/storage/#emptydir), [PVC](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims), [projected](https://kubernetes.io/docs/tasks/configure-pod-container/configure-projected-volume-storage/)
 
@@ -36,7 +36,7 @@ To understand the architecture and purpose about the controller and the objects 
 
 **ReadOnlyRootFilesystem** - No writable layer
 
-<h5>Users and Groups</h5>
+<h4>Users and Groups</h4>
 
 **RunAsUser** - With which user ID the containers will run
 
@@ -44,7 +44,7 @@ To understand the architecture and purpose about the controller and the objects 
 
 **SupplementalGroups** - With which supplemental group/s ID/s the containers will run
 
-<h5>Privilege Escalation</h5>
+<h4>Privilege Escalation</h4>
 
 **AllowPrivilegeEscalation** - Gates whether or not a user is allowed to set the security context of a container to allowPrivilegeEscalation=true
 
