@@ -1,0 +1,32 @@
+# kubectl label nodes node-1 node-2 kubernetes.io/e2e-az-name:e2e-az1
+# kubectl label nodes node-2 node-2 region:my-region
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-affinity
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/e2e-az-name
+            operator: In
+            values:
+            - e2e-az1
+            - e2e-az2
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 1
+        preference:
+          matchExpressions:
+          - key: region
+            operator: In
+            values:
+            - my-preferred-region
+  containers:
+  - name: container-pod-affinity
+    image: k8s.gcr.io/pause:2.0
+    resources:
+        limits:
+          memory: "128Mi"
+          cpu: "100M"

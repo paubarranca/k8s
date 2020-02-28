@@ -1,4 +1,5 @@
 # The pod only runs on a node that matches these labels
+# Attach label to a node: kubectl label nodes <node-name> <label-key>=<label-value>
 apiVersion: v1
 kind: Pod
 metadata:
