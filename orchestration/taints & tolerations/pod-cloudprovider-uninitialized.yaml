@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "100M"
+  tolerations:
+  - key: "node.cloudprovider.kubernetes.io/uninitialized"
+    operator: "Exists"
+    effect: "NoSchedule"
+    tolerationSeconds: 6000
