@@ -1,0 +1,71 @@
+# Anti-affinity to redis deployment so we don't have more than one redis pod running on the same node
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-affinity-redis
+spec:
+  selector:
+    matchLabels:
+      app: cache
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: cache
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - cache
+            topologyKey: "kubernetes.io/hostname"
+      containers:
+      - name: redis-cache
+        image: redis:3.2-alpine
+        resources:
+          limits:
+            memory: "100Mi"
+            cpu: "100M"
+
+---
+# We ensure that more than one nginx pods are not running in the same node and that an nginx pod must run in the same node as a redis pod
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-affinity-nginx
+spec:
+  selector:
+    matchLabels:
+      app: frontend
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - frontend
+            topologyKey: "kubernetes.io/hostname"
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - cache
+            topologyKey: "kubernetes.io/hostname"
+      containers:
+      - name: nginx
+        image: nginx:1.12-alpine

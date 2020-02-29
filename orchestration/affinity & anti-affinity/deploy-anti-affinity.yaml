@@ -23,7 +23,7 @@ spec:
                 - web-store
             topologyKey: "kubernetes.io/hostname"
       containers:
-        - name: nginx
+        - name: web-store
           image: nginx
           resources:
               limits:
